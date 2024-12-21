@@ -13,6 +13,12 @@ def save():
         return jsonify({"error": "Invalid data. All fields are required: 'nome', 'latitude', 'longitude', 'descricao'"}), 400
 
     try:
+        # Converter latitude e longitude para números
+        try:
+            data['latitude'] = float(data['latitude'])
+            data['longitude'] = float(data['longitude'])
+        except ValueError:
+            return jsonify({"error": "Latitude and longitude must be valid numbers"}), 400
         # Tentar carregar dados existentes
         try:
             with open('data.json', 'r') as file:
